@@ -1,23 +1,37 @@
 import logo from './logo.svg';
 import './App.css';
+import React, {useState} from "react";
+import imageData from './imageData';
+import Images from './components/Images';
 
 function App() {
+
+  const currentImage = imageData[0].img;
+  const [bigImage, setBigImage] = useState(currentImage);
+  const handleClick = (url)=>{
+    setBigImage(url)
+  }
+  const allImages = imageData.map((image, index)=>{
+    return(
+      <img className="thumb"
+        onClick={()=>handleClick(image.img)}
+        key={index}
+        id={image.city}
+        src={image.img}
+        alt={image.city}
+      />
+    )
+  })
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Cities of the World</h1>
+      <div id="container">
+        <div id="thumbnails">
+          {allImages}
+        </div>
+        <img  src={bigImage} id="big-image" alt="bigImage"/>
+      </div>
     </div>
   );
 }
